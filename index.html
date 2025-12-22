@@ -3,140 +3,780 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hamzat Muhsin | Frontend Developer</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Hamzat Muhsin - Web Developer Portfolio</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: #00ff88;
+        --secondary: #0066ff;
+        --accent: #ff0066;
+        --bg-dark: #000000;
+        --bg-card: #111111;
+        --text: #ffffff;
+        --text-gray: #a0a0a0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--bg-dark);
+        color: var(--text);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* Animated Background */
+      .bg-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: radial-gradient(
+            ellipse at top,
+            rgba(0, 255, 136, 0.1),
+            transparent
+          ),
+          radial-gradient(
+            ellipse at bottom,
+            rgba(0, 102, 255, 0.1),
+            transparent
+          );
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 1.5rem 5%;
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .nav-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+        position: relative;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: width 0.3s;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      /* Hero Section */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 8rem 5% 4rem;
+      }
+
+      .hero-content h1 {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: fadeInUp 1s ease;
+      }
+
+      .hero-content .subtitle {
+        font-size: 1.5rem;
+        color: var(--text-gray);
+        margin-bottom: 2rem;
+        animation: fadeInUp 1s ease 0.2s backwards;
+      }
+
+      .hero-content p {
+        font-size: 1.1rem;
+        color: var(--text-gray);
+        max-width: 600px;
+        margin: 0 auto 2rem;
+        animation: fadeInUp 1s ease 0.4s backwards;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        animation: fadeInUp 1s ease 0.6s backwards;
+      }
+
+      .btn {
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: var(--bg-dark);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--text);
+        border: 2px solid var(--primary);
+      }
+
+      .btn-secondary:hover {
+        background: var(--primary);
+        color: var(--bg-dark);
+      }
+
+      /* Section Styles */
+      section {
+        padding: 5rem 5%;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        text-align: center;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .section-subtitle {
+        text-align: center;
+        color: var(--text-gray);
+        margin-bottom: 3rem;
+        font-size: 1.1rem;
+      }
+
+      /* Skills Section */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .skill-card {
+        background: var(--bg-card);
+        padding: 2rem;
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s;
+      }
+
+      .skill-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary);
+        box-shadow: 0 10px 40px rgba(0, 255, 136, 0.2);
+      }
+
+      .skill-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .skill-card h3 {
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+      }
+
+      .skill-list {
+        list-style: none;
+        color: var(--text-gray);
+      }
+
+      .skill-list li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .skill-list li:last-child {
+        border-bottom: none;
+      }
+
+      /* Projects Section */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .project-card {
+        background: var(--bg-card);
+        border-radius: 15px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s;
+      }
+
+      .project-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--primary);
+        box-shadow: 0 10px 40px rgba(0, 255, 136, 0.2);
+      }
+
+      .project-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 255, 136, 0.2),
+          rgba(0, 102, 255, 0.2)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .project-badge {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: var(--primary);
+        color: var(--bg-dark);
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+      }
+
+      .project-content {
+        padding: 1.5rem;
+      }
+
+      .project-content h3 {
+        color: var(--text);
+        margin-bottom: 0.5rem;
+        font-size: 1.5rem;
+      }
+
+      .project-content p {
+        color: var(--text-gray);
+        margin-bottom: 1rem;
+        line-height: 1.6;
+      }
+
+      .tech-stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .tech-tag {
+        background: rgba(0, 255, 136, 0.1);
+        color: var(--primary);
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        border: 1px solid var(--primary);
+      }
+
+      .project-links {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .project-link {
+        padding: 0.6rem 1.2rem;
+        background: transparent;
+        color: var(--primary);
+        border: 1px solid var(--primary);
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        font-size: 0.9rem;
+      }
+
+      .project-link:hover {
+        background: var(--primary);
+        color: var(--bg-dark);
+        transform: translateY(-2px);
+      }
+
+      /* Contact Section */
+      .contact-content {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        padding: 1.5rem;
+        background: var(--bg-card);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s;
+      }
+
+      .contact-item:hover {
+        border-color: var(--primary);
+        transform: translateX(10px);
+      }
+
+      .contact-icon {
+        font-size: 2rem;
+      }
+
+      .contact-item a {
+        color: var(--text);
+        text-decoration: none;
+        font-size: 1.1rem;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+
+      .social-link {
+        width: 50px;
+        height: 50px;
+        background: var(--bg-card);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        transition: all 0.3s;
+        text-decoration: none;
+      }
+
+      .social-link:hover {
+        background: var(--primary);
+        border-color: var(--primary);
+        transform: translateY(-5px);
+      }
+
+      /* Footer */
+      footer {
+        background: var(--bg-card);
+        padding: 2rem 5%;
+        text-align: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text-gray);
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .hero-content h1 {
+          font-size: 2.5rem;
+        }
+
+        .hero-content .subtitle {
+          font-size: 1.2rem;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+        }
+
+        .projects-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .skills-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
   </head>
   <body>
-    <header>
-      <h1>Hamzat Muhsin</h1>
-      <p>Frontend Web Developer | HTML • CSS • JavaScript • React • Next.js</p>
-      <p>
-        <a href="mailto:muhsinhamzat23@gmail.com" style="color: #3b83f69e"
-          >muhsinhamzat23@gmail.com</a
-        >
-        |
-        <a
-          href="https://github.com/Dollypee18"
-          target="_blank"
-          style="color: #3b83f69c"
-          >GitHub</a
-        >
-      </p>
-    </header>
+    <div class="bg-animation"></div>
 
-    <div class="container">
-      <section id="about">
-        <h2>About Me</h2>
+    <!-- Navigation -->
+    <nav>
+      <div class="nav-container">
+        <div class="logo">&lt;Hamzat Muhsin /&gt;</div>
+        <ul class="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <h1>Hi, I'm Hamzat Muhsin</h1>
+        <p class="subtitle">Junior Web Developer | React Enthusiast</p>
         <p>
-          Motivated and detail-oriented Frontend Web Developer with 2 years of
-          hands-on experience building responsive, user-friendly web
-          applications using HTML, CSS, JavaScript, React, and Next.js.
-          Passionate about turning creative ideas into functional digital
-          experiences with clean, maintainable code.
+          I build modern, responsive web applications using HTML, CSS,
+          JavaScript, and React. Passionate about creating beautiful user
+          experiences and clean code.
         </p>
-      </section>
-
-      <section id="skills">
-        <h2>Skills</h2>
-        <div class="skills">
-          <span>HTML5</span>
-          <span>CSS3</span>
-          <span>JavaScript (ES6+)</span>
-          <span>React</span>
-          <span>Next.js</span>
-          <span>Tailwind CSS</span>
-          <span>Git</span>
-          <span>Vercel</span>
-          <span>Responsive Design</span>
+        <div class="cta-buttons">
+          <a href="#projects" class="btn btn-primary">View My Work</a>
+          <a href="#contact" class="btn btn-secondary">Get In Touch</a>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section id="projects">
-        <h2>Projects</h2>
-        <div class="project">
-          <h3>🏠 CasaFind — Real Estate Web App</h3>
-          <p>
-            A responsive platform that allows users to browse, filter, and view
-            property listings using React and Next.js.
-          </p>
-          <p>
-            <strong>Tech Stack:</strong> HTML, JavaScript, React, Tailwind CSS,
-            Git, Vercel.
-          </p>
-          <p>
-            <a
-              href="https://github.com/Dollypee18/casafind-platform"
-              target="_blank"
-              >View on GitHub</a
-            >
-          </p>
-        </div>
-        <div class="project">
-          <h3>🍽️ Jellof Republic — Food Delivery Web App</h3>
-          <p>
-            A modern, responsive landing page for a restaurant offering doorstep
-            food delivery, built with React.
-          </p>
-          <p>
-            <strong>Tech Stack:</strong> HTML, JavaScript, React, Tailwind CSS,
-            Git, Vercel.
-          </p>
-          <p>
-            <a
-              href="https://github.com/Dollypee18/jollof-republic"
-              target="_blank"
-              >View on GitHub</a
-            >
-          </p>
-        </div>
-        <div class="project">
-          <h3>Techstore - E-Commerce Website</h3>
-          <p>
-            A modern, fully responsive e-commerce website built with pure HTML,
-            CSS, and JavaScript.
-          </p>
-          <p>
-            <strong>Tech Stack:</strong> HTML, JavaScript, Tailwind CSS, Git,
-            Vercel.
-          </p>
-          <p>
-            <a href="https://github.com/Dollypee18/TechStore" target="_blank"
-              >View on GitHub</a
-            >
-          </p>
-        </div>
-      </section>
+    <!-- Skills Section -->
+    <section id="skills">
+      <h2 class="section-title">My Skills</h2>
+      <p class="section-subtitle">Technologies I work with</p>
 
-      <section id="education">
-        <h2>Education & Certifications</h2>
-        <p>
-          <strong>University of Ilorin</strong> — Bachelor of Arts, History and
-          International Studies
-        </p>
-        <p><strong>Udemy</strong> — Frontend Development Courses</p>
-        <p>
-          <strong>FreeCodeCamp</strong> — Responsive Web Design & JavaScript
-          Algorithms
-        </p>
-      </section>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon">🎨</div>
+          <h3>Frontend Development</h3>
+          <ul class="skill-list">
+            <li>HTML5 & CSS3</li>
+            <li>JavaScript (ES6+)</li>
+            <li>Responsive Design</li>
+            <li>CSS Grid & Flexbox</li>
+          </ul>
+        </div>
 
-      <section id="contact">
-        <h2>Contact</h2>
-        <p>
-          📧
-          <a href="mailto:muhsinhamzat23@gmail.com">muhsinhamzat23@gmail.com</a>
-        </p>
-        <p>
-          🌐
-          <a href="https://github.com/Dollypee18" target="_blank"
-            >GitHub Profile</a
+        <div class="skill-card">
+          <div class="skill-icon">⚛️</div>
+          <h3>React Development</h3>
+          <ul class="skill-list">
+            <li>React Hooks</li>
+            <li>Component Architecture</li>
+            <li>State Management</li>
+            <li>React Router</li>
+          </ul>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-icon">🛠️</div>
+          <h3>Tools & Others</h3>
+          <ul class="skill-list">
+            <li>Git & GitHub</li>
+            <li>VS Code</li>
+            <li>Recharts & Data Viz</li>
+            <li>REST APIs</li>
+          </ul>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-icon">💡</div>
+          <h3>Core Competencies</h3>
+          <ul class="skill-list">
+            <li>Problem Solving</li>
+            <li>Clean Code Practices</li>
+            <li>UI/UX Principles</li>
+            <li>Continuous Learning</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-subtitle">A showcase of my recent work</p>
+
+      <div class="projects-grid">
+        <!-- Project 1: E-Commerce -->
+        <div class="project-card">
+          <div class="project-image">
+            🛒
+            <span class="project-badge">Featured</span>
+          </div>
+          <div class="project-content">
+            <h3>TechStore E-Commerce</h3>
+            <p>
+              A full-featured e-commerce website with product filtering, search
+              functionality, shopping cart, and checkout process. Built with
+              pure HTML, CSS, and JavaScript.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-tag">HTML5</span>
+              <span class="tech-tag">CSS3</span>
+              <span class="tech-tag">JavaScript</span>
+              <span class="tech-tag">Responsive</span>
+            </div>
+            <div class="project-links">
+              <a
+                href="https://tech-store-lyart.vercel.app/"
+                class="project-link"
+                >Live Demo</a
+              >
+              <a
+                href="https://github.com/Dollypee18/TechStore"
+                class="project-link"
+                >GitHub</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2: React Dashboard -->
+        <div class="project-card">
+          <div class="project-image">
+            📊
+            <span class="project-badge">React</span>
+          </div>
+          <div class="project-content">
+            <h3>Admin Dashboard</h3>
+            <p>
+              A modern admin dashboard with data visualization, dark mode,
+              real-time charts, and order management. Built with React and
+              Recharts library.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-tag">React</span>
+              <span class="tech-tag">Recharts</span>
+              <span class="tech-tag">Hooks</span>
+              <span class="tech-tag">Dark Mode</span>
+            </div>
+            <div class="project-links">
+              <a href="#" class="project-link">Live Demo</a>
+              <a href="#" class="project-link">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3: Jollof Nation -->
+        <div class="project-card">
+          <div class="project-image">
+            🍲
+            <span class="project-badge">React</span>
+          </div>
+          <div class="project-content">
+            <h3>Jollof Republic</h3>
+            <p>
+              Modern food ordering web app with dynamic cart system, category
+              filtering, and theme switching. Built with React 18, Vite, and
+              Tailwind CSS. Optimized for performance with mobile-first UX.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-tag">React 18</span>
+              <span class="tech-tag">Vite</span>
+              <span class="tech-tag">Tailwind CSS</span>
+              <span class="tech-tag">Hooks</span>
+            </div>
+            <div class="project-links">
+              <a href="https://jollof-republic.vercel.app/" class="project-link"
+                >Live Demo</a
+              >
+              <a
+                href="https://github.com/Dollypee18/jollof-republic"
+                class="project-link"
+                >GitHub</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4: CasaFind -->
+        <div class="project-card">
+          <div class="project-image">
+            🏠
+            <span class="project-badge">AI-Powered</span>
+          </div>
+          <div class="project-content">
+            <h3>CasaFind</h3>
+            <p>
+              Intelligent real estate platform using AI to match homeowners with
+              qualified prospects based on preferences, budgets, and lifestyle.
+              Built with Next.js 14+ for optimal performance and SEO.
+            </p>
+            <div class="tech-stack">
+              <span class="tech-tag">React 18</span>
+              <span class="tech-tag">Next.js 14+</span>
+              <span class="tech-tag">Tailwind CSS</span>
+              <span class="tech-tag">AI</span>
+            </div>
+            <div class="project-links">
+              <a
+                href="https://casafind-platform.vercel.app/"
+                class="project-link"
+                >Live Demo</a
+              >
+              <a
+                href="https://github.com/Dollypee18/casafind-platform"
+                class="project-link"
+                >GitHub</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <h2 class="section-title">Get In Touch</h2>
+      <p class="section-subtitle">Let's work together on your next project</p>
+
+      <div class="contact-content">
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">📧</span>
+            <a href="mailto:your.email@example.com">muhsinhamzat23@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📱</span>
+            <a href="tel:+2348058871184">+234 805 887 1184</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <span>Ibadan, Nigeria</span>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a
+            href="https://github.com/Dollypee18"
+            class="social-link"
+            title="GitHub"
+            >💻</a
           >
-        </p>
-      </section>
-    </div>
+          <a
+            href="https://www.linkedin.com/in/hamzat-muhsin-879a74384/"
+            class="social-link"
+            title="LinkedIn"
+            >💼</a
+          >
+          <a
+            href="https://x.com/Dollypee181"
+            class="social-link"
+            title="Twitter"
+            >🐦</a
+          >
+          <a
+            href="https://muhsindev.vercel.app/"
+            class="social-link"
+            title="Portfolio"
+            >🌐</a
+          >
+        </div>
+      </div>
+    </section>
 
+    <!-- Footer -->
     <footer>
-      <p>© 2025 Hamzat Muhsin | Frontend Developer</p>
+      <p>&copy; 2025 Muhsin. Frontend Developer</p>
+      <p>All rights reserved.</p>
     </footer>
+
+    <script>
+      // Smooth scrolling
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      });
+
+      // Intersection Observer for animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -100px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.animation = "fadeInUp 0.8s ease forwards";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".skill-card, .project-card").forEach((el) => {
+        observer.observe(el);
+      });
+    </script>
   </body>
 </html>
